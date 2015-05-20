@@ -21,8 +21,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Attachments)
 	bool IsValidAttachmentPoint(FName PointToCheck);
 
-	//UFUNCTION(BlueprintCallable, Category=Attachments)
-	//void AttachItem(AWAWEquippableItem* Item, FName AttachmentPoint);
+	UFUNCTION(BlueprintCallable, Category=Attachments)
+	void AttachItem(class AWAWEquippableItem* Item, FName AttachmentPoint);
+
+	UFUNCTION(BlueprintCallable, Category = Attachments)
+	class AWAWLoadout* GetLoadout();
+
+	UFUNCTION(BlueprintCallable, Category = Attachments)
+	void CheckLoadout();
 
 protected:
 
@@ -33,11 +39,10 @@ protected:
 
 	void dummyFunc();
 
-	//UPROPERTY(BlueprintReadWrite, Category=Defaults)
-	//class AWAWWeapon* PrimaryWeapon; 
+	UPROPERTY(BlueprintReadWrite, Category=Defaults)
+	class AWAWWeapon* PrimaryWeapon; 
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-	//class AWAWLoadout* Loadout;
-
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+		TSubclassOf<AWAWLoadout> Loadout;
 
 };

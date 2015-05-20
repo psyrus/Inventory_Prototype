@@ -75,6 +75,10 @@ public:
 	UPROPERTY(EditAnywhere, Category = Kit)
 		USkeletalMeshComponent* PhysicalMesh;
 
+	/*The name of this loadout*/
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Contents)
+		FName LoadoutName;
+
 	/*The base 0-9 Inventory that will be in the kit*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Contents)
 		//TArray<AWAWEquippableItem*> EquipmentList;

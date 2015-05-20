@@ -20,6 +20,7 @@ AWAWLoadout::AWAWLoadout(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	RootComponent = PhysicalMesh;
 	FMagazineType GunMags;
 	MagazineList.Add(GunMags);
+	LoadoutName = "Unset";
 }
 
 void AWAWLoadout::PostInitProperties()
@@ -31,14 +32,27 @@ void AWAWLoadout::PostInitProperties()
 void AWAWLoadout::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+	UE_LOG(LogTemp, Warning, TEXT("Tried to Initialize Item"));
+	GEngine->AddOnScreenDebugMessage(3, 5.f, FColor::Green, "Inventory spawned");
+
+	Super::PostInitializeComponents();
+	FString inventoryLength = FString::FromInt(EquipmentList.Max());
+	UE_LOG(LogTemp, Warning, TEXT("There are %s in the equipment list"), *inventoryLength);	
+
 	/* Spawn all of the equipment items that are in the equipment lists*/
 	for (TSubclassOf<AWAWEquippableItem> Item : EquipmentList)
 	{
+		GEngine->AddOnScreenDebugMessage(3, 5.f, FColor::Green, "Trying to spwn");
+
 		if (Item)
 		{
-			GetWorld()->SpawnActor<AWAWEquippableItem>(Item);
+			AWAWEquippableItem* CurrentItem = GetWorld()->SpawnActor<AWAWEquippableItem>(Item);
+			Inventory.Add(CurrentItem);
+			UE_LOG(LogTemp, Warning, TEXT("Initialized Item"));
+
 		}
 	}
+	UE_LOG(LogTemp, Warning, TEXT("Weapon initialization finished"));
 
 	/* Spawn magazines for the guns*/
 	for (int32 iter = 0; iter < MagazineList.Num(); ++iter)
