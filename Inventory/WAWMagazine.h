@@ -14,18 +14,27 @@ class AWAWMagazine : public AWAWEquippableItem
 	GENERATED_BODY()
 
 		AWAWMagazine(const FObjectInitializer& ObjectInitializer);
-		int Capacity;
-		int CurrentAmmo;
+	
+		
+protected:
+		UPROPERTY(EditDefaultsOnly, Category = "Ammo")
+			int8 Capacity;
+
+		int8 CurrentAmmo;
 		bool bIsFull;
 		bool bIsEmpty;
-		FText DisplayName;
 public:
 		//Accessor Functions
-		int GetCurrentAmmo();
-		int GetCapacity();
+		UFUNCTION(BlueprintCallable, Category = "Ammo")
+		int8 GetCurrentAmmo();
+		UFUNCTION(BlueprintCallable, Category = "Ammo")
+		int8 GetCapacity();
+		UFUNCTION(BlueprintCallable, Category = "Ammo")
 		bool IsEmpty();
+		UFUNCTION(BlueprintCallable, Category = "Ammo")
 		bool IsFull();
 
+		UFUNCTION(BlueprintCallable, Category = "Ammo")
 		void AddChamberedRound();
-		void DecrementAmmo(int Amount);
+		void DecrementAmmo(int8 Amount);
 };

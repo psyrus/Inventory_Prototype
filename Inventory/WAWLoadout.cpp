@@ -19,6 +19,7 @@ AWAWLoadout::AWAWLoadout(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	PhysicalMesh->SetVisibility(false);
 	RootComponent = PhysicalMesh;
 	FMagazineType GunMags;
+	GunMags.MagazineName = "Test Magazine";
 	MagazineList.Add(GunMags);
 	LoadoutName = "Unset";
 }
@@ -57,6 +58,11 @@ void AWAWLoadout::PostInitializeComponents()
 	/* Spawn magazines for the guns*/
 	for (int32 iter = 0; iter < MagazineList.Num(); ++iter)
 	{
+			for (int8 i = 0; i < MagazineList[iter].NumMagazines; i++)
+			{
+				MagazineList[iter].Magazines.Add(GetWorld()->SpawnActor<AWAWMagazine>(MagazineList[iter].DefaultMagClass));
+			}
+		//AWAWWeapon* EditWeapon = Cast<AWAWWeapon>(EquipmentList[MagazineList[iter].AssociatedSlot]);
 		//AWAWWeapon* EditWeapon = Cast<AWAWWeapon>(EquipmentList[MagazineList[iter].AssociatedSlot]);
 		//EditWeapon->MagazineListIndex = iter;
 	}
@@ -94,7 +100,6 @@ void AWAWLoadout::Destroy()
 {
 	return;
 }
-
 
 /** Return the current owner of the loadout (actually the owner of the inventory controller, but to avoid a circular dependency we set it here too)*/
 AWAWCharacter* AWAWLoadout::GetOwningPawn()
