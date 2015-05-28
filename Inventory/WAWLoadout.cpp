@@ -43,28 +43,23 @@ void AWAWLoadout::PostInitializeComponents()
 	/* Spawn all of the equipment items that are in the equipment lists*/
 	for (TSubclassOf<AWAWEquippableItem> Item : EquipmentList)
 	{
-		GEngine->AddOnScreenDebugMessage(3, 5.f, FColor::Green, "Trying to spwn");
+		GEngine->AddOnScreenDebugMessage(3, 5.f, FColor::Green, "Trying to spawn item");
 
 		if (Item)
 		{
 			AWAWEquippableItem* CurrentItem = GetWorld()->SpawnActor<AWAWEquippableItem>(Item);
+			CurrentItem->GetItemMesh()->SetVisibility(false, true);
 			Inventory.Add(CurrentItem);
-			UE_LOG(LogTemp, Warning, TEXT("Initialized Item"));
+			UE_LOG(LogTemp, Warning, TEXT("Initialized Item: %s", CurrentItem->GetName()));
 
 		}
 	}
-	UE_LOG(LogTemp, Warning, TEXT("Weapon initialization finished"));
+	UE_LOG(LogTemp, Warning, TEXT("Item initialization finished"));
 
 	/* Spawn magazines for the guns*/
 	for (int32 iter = 0; iter < MagazineList.Num(); ++iter)
 	{
-			for (int8 i = 0; i < MagazineList[iter].NumMagazines; i++)
-			{
-				MagazineList[iter].Magazines.Add(GetWorld()->SpawnActor<AWAWMagazine>(MagazineList[iter].DefaultMagClass));
-			}
-		//AWAWWeapon* EditWeapon = Cast<AWAWWeapon>(EquipmentList[MagazineList[iter].AssociatedSlot]);
-		//AWAWWeapon* EditWeapon = Cast<AWAWWeapon>(EquipmentList[MagazineList[iter].AssociatedSlot]);
-		//EditWeapon->MagazineListIndex = iter;
+		//Have an array that simply has integers in it, and that can be used to initialize the magazines.
 	}
 
 

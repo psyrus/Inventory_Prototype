@@ -17,7 +17,7 @@ class AWAWMagazine : public AWAWEquippableItem
 	
 		
 protected:
-		UPROPERTY(EditDefaultsOnly, Category = "Ammo")
+		UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Ammo")
 			int8 Capacity;
 
 		int8 CurrentAmmo;
