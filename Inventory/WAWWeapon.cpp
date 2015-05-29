@@ -29,7 +29,7 @@ bool AWAWWeapon::CanFire()
 
 void AWAWWeapon::Fire()
 {
-	if (canFire())
+	if (CanFire())
 	{
 		//Spawn projectile
 

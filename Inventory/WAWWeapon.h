@@ -36,7 +36,7 @@ public:
 	void Reload();
 
 	UFUNCTION(BlueprintCallable, Category = Gun)
-	void BurstFire(int8 RoundsToFire);
+	void BurstFire(uint8 RoundsToFire);
 
 	bool CanFire();
 
