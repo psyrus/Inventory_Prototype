@@ -13,24 +13,41 @@ AWAWWeapon::AWAWWeapon(const FObjectInitializer& ObjectInitializer) : Super( Obj
 void AWAWWeapon::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
-	CurrentMagazine = GetWorld()->SpawnActor<AWAWMagazine>(AWAWMagazine::StaticClass());
 	//GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, TEXT("Magazine has shots remaining:"));
+}
+
+bool AWAWWeapon::CanFire()
+{
+	bool canFire = true;
+
+	//Insert all conditions for being unable to fire here
+	if (shotsInMagazine > 0)
+		canFire = false;
+
+	return canFire;
 }
 
 void AWAWWeapon::Fire()
 {
-
-	if (CurrentMagazine->IsEmpty() == false)
+	if (canFire())
 	{
-		CurrentMagazine->DecrementAmmo(1);
-		GEngine->AddOnScreenDebugMessage(2, 5.f, FColor::Red, TEXT("Pushed!!"));
-		//int x = CurrentMagazine->GetCurrentAmmo();
+		//Spawn projectile
+
+		//Spawn effects
+
+		//Decrement ammo
+		shotsInMagazine -= 1;
 	}
+	else
+	{
+		//Play empty shot sound (maybe networked, maybe not)
+	}
+	GEngine->AddOnScreenDebugMessage(2, 5.f, FColor::Red, TEXT("Fired!!"));
 }
 
-void AWAWWeapon::BurstFire(int RoundsToFire)//I figured you won't always have 3 round burst
+void AWAWWeapon::BurstFire(uint8 RoundsToFire)//I figured you won't always have 3 round burst
 {
-	if (CurrentMagazine->IsEmpty() == false)
+	if (canFire())
 	{
 		if (CurrentMagazine->GetCurrentAmmo() >= RoundsToFire)
 		{

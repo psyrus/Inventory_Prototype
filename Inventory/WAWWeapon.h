@@ -12,6 +12,14 @@
 
 class AWAWLoadout;
 
+UENUM(BlueprintType)		//"BlueprintType" is essential to include
+enum class EFireMode : uint8
+{
+	VE_Single 	UMETA(DisplayName = "Single Shot"),
+	VE_3_Burst 	UMETA(DisplayName = "3 Round Burst"),
+	VE_Auto		UMETA(DisplayName = "Automatic Fire")
+};
+
 UCLASS()
 class AWAWWeapon : public AWAWUsableItem
 {
@@ -19,21 +27,24 @@ class AWAWWeapon : public AWAWUsableItem
 
 public:
 	AWAWWeapon(const FObjectInitializer& ObjectInitializer);
-	int CurrentMagazineCount;//how many the weapon has left
-
 	virtual void PostInitializeComponents() override;
 
-	UFUNCTION(BlueprintCallable, Category=Misc)
+	UFUNCTION(BlueprintCallable, Category = Gun)
 	void Fire();
 
+	UFUNCTION(BlueprintCallable, Category = Gun)
 	void Reload();
-	void BurstFire(int RoundsToFire);
-	int GetMaximumMagazines();
-	int GetCurrentMagazineCount();
-	void SetCurrentMagazineCount(int Magazines);//Can I use "Amount" for this even though it was used before, for DecrementAmmo(Amount)?
 
-	int MagazineListIndex;
-	AWAWMagazine* CurrentMagazine;
-	//TSubclassOf<AWAWMagazine> CurrentMagazine;
+	UFUNCTION(BlueprintCallable, Category = Gun)
+	void BurstFire(int8 RoundsToFire);
+
+	bool CanFire();
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gun)
+	uint8 shotsInMagazine;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Gun)
+	TArray<EFireMode> fireModes;
+	
 
 };

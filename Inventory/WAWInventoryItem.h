@@ -13,7 +13,6 @@ class AWAWInventoryItem : public AActor /**Done CPP**/
 	GENERATED_UCLASS_BODY()
 	
 public:
-
 	/** animation played on pawn */
 	UPROPERTY(EditDefaultsOnly, Category = Animation)
 		UAnimMontage* PawnAnimation;

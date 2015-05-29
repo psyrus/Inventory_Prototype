@@ -12,12 +12,12 @@ AWAWMagazine::AWAWMagazine(const FObjectInitializer& ObjectInitializer) : Super(
 	bIsEmpty = false;
 }
 
-int AWAWMagazine::GetCurrentAmmo()
+int8 AWAWMagazine::GetCurrentAmmo()
 {
 	return CurrentAmmo;
 }
 
-int AWAWMagazine::GetCapacity()
+int8 AWAWMagazine::GetCapacity()
 {
 	return Capacity;
 }
@@ -32,7 +32,7 @@ bool AWAWMagazine::IsFull()
 	return bIsFull;
 }
 
-void AWAWMagazine::DecrementAmmo(int Amount)
+void AWAWMagazine::DecrementAmmo(int8 Amount)
 {
 	if((CurrentAmmo - Amount) > 0) 
 	{
