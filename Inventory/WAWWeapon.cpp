@@ -7,7 +7,7 @@
 
 AWAWWeapon::AWAWWeapon(const FObjectInitializer& ObjectInitializer) : Super( ObjectInitializer)
 {
-	shotsInMagazine = 3;
+	ShotsInMagazine = 1;
 }
 
 void AWAWWeapon::PostInitializeComponents()
@@ -18,13 +18,13 @@ void AWAWWeapon::PostInitializeComponents()
 
 bool AWAWWeapon::CanFire()
 {
-	bool canFire = true;
+	bool CanFire = true;
 
 	//Insert all conditions for being unable to fire here
-	if (shotsInMagazine > 0)
-		canFire = false;
+	if (ShotsInMagazine > 0)
+		CanFire = false;
 
-	return canFire;
+	return CanFire;
 }
 
 void AWAWWeapon::Fire()
@@ -36,7 +36,7 @@ void AWAWWeapon::Fire()
 		//Spawn effects
 
 		//Decrement ammo
-		shotsInMagazine -= 1;
+		ShotsInMagazine -= 1;
 	}
 	else
 	{
@@ -47,7 +47,7 @@ void AWAWWeapon::Fire()
 
 void AWAWWeapon::BurstFire(uint8 RoundsToFire)//I figured you won't always have 3 round burst
 {
-	if (canFire())
+	if (CanFire())
 	{
 		if (CurrentMagazine->GetCurrentAmmo() >= RoundsToFire)
 		{
