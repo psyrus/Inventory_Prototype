@@ -7,7 +7,7 @@
 
 AWAWWeapon::AWAWWeapon(const FObjectInitializer& ObjectInitializer) : Super( ObjectInitializer)
 {
-
+	shotsInMagazine = 1;
 }
 
 void AWAWWeapon::PostInitializeComponents()

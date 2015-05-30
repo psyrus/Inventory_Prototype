@@ -17,9 +17,9 @@ struct FWeaponData
 {
 	GENERATED_BODY()
 
-		/** inifite ammo for reloads */
-		UPROPERTY(EditDefaultsOnly, Category = Ammo)
-		bool bInfiniteAmmo;
+	/** inifite ammo for reloads */
+	UPROPERTY(EditDefaultsOnly, Category = Ammo)
+	bool bInfiniteAmmo;
 
 	/** infinite ammo in Mag, no reload required */
 	UPROPERTY(EditDefaultsOnly, Category = Ammo)
@@ -113,6 +113,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Gun)
 		void BurstFire(uint8 RoundsToFire);
+
+	UFUNCTION(BlueprintCallable, Category = Gun)
+		void CycleFireMode(); //needs a server equivalent
 
 	bool CanFire();
 
