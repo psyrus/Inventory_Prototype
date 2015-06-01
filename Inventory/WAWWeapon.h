@@ -120,13 +120,13 @@ public:
 	bool CanFire();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gun)
-		uint8 ShotsInMagazine;
+		uint8 AmmoInMagazine;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Gun)
 		TArray<EFireMode> FireModes;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Gun)
-		TSubclassOf<AWAWMagazine> MagazineType;
+		TSubclassOf<AWAWMagazine> CurrentMagazine;
 
 	TArray<int8> MagazineAmmoCounts;
 

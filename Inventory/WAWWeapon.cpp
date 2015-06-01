@@ -7,7 +7,7 @@
 
 AWAWWeapon::AWAWWeapon(const FObjectInitializer& ObjectInitializer) : Super( ObjectInitializer)
 {
-	ShotsInMagazine = 1;
+	AmmoInMagazine = 1;
 }
 
 void AWAWWeapon::PostInitializeComponents()
@@ -21,7 +21,7 @@ bool AWAWWeapon::CanFire()
 	bool CanFire = true;
 
 	//Insert all conditions for being unable to fire here
-	if (ShotsInMagazine > 0)
+	if (AmmoInMagazine <= 0)
 		CanFire = false;
 
 	return CanFire;
@@ -36,7 +36,7 @@ void AWAWWeapon::Fire()
 		//Spawn effects
 
 		//Decrement ammo
-		ShotsInMagazine -= 1;
+		AmmoInMagazine -= 1;
 	}
 	else
 	{
@@ -45,17 +45,28 @@ void AWAWWeapon::Fire()
 	GEngine->AddOnScreenDebugMessage(2, 5.f, FColor::Red, TEXT("Fired!!"));
 }
 
+/** Fire consecutive shots in one trigger pull. */
 void AWAWWeapon::BurstFire(uint8 RoundsToFire)//I figured you won't always have 3 round burst
 {
 	if (CanFire())
 	{
-		if (CurrentMagazine->GetCurrentAmmo() >= RoundsToFire)
+		/* If we decide to just call the fire() method in a loop, this block is pretty useless, we should
+		 * just determine which is lower, AmmoInMagazine or RoundsToFire and fire that many times, so it just needs
+		 * a single loop block 
+		 */
+		if (AmmoInMagazine >= RoundsToFire)
 		{
-			CurrentMagazine->DecrementAmmo(RoundsToFire);
+			//Should we just call the fire method (RoundsToFire) times? 
+			//For efficiency's sake (lowering the function call stack) we could implement the firing functionality again here.
 		}
-		else
 		{
-			CurrentMagazine->DecrementAmmo(CurrentMagazine->GetCurrentAmmo());//if you have less rounds left than the burst mode, fire remaining rounds
+			//if you have less rounds left than the burst mode, fire remaining rounds
+			//In this one call the fire function AmmoRemaining times
+			for (int fireIter = 1; fireIter < AmmoInMagazine; ++fireIter)
+			{
+				Fire();
+			}
+			
 		}
 	}
 }
@@ -63,7 +74,8 @@ void AWAWWeapon::BurstFire(uint8 RoundsToFire)//I figured you won't always have 
 void AWAWWeapon::Reload()
 {
 	//Don't reload if the magazine is still full
-	if (!CurrentMagazine->IsFull())
+	AWAWMagazine* Magazine = Cast<AWAWMagazine>(CurrentMagazine);
+	if (!Magazine->IsFull())
 	{
 		/** */
 
