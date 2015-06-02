@@ -33,6 +33,11 @@ public:
 		bool IsEmpty();
 		UFUNCTION(BlueprintCallable, Category = "Ammo")
 		bool IsFull();
+		UFUNCTION(BlueprintCallable, Category = "Ammo")
+			void Refill();
+		UFUNCTION(BlueprintCallable, Category = "Ammo")
+			void LoadAmmo();
+
 
 		UFUNCTION(BlueprintCallable, Category = "Ammo")
 		void AddChamberedRound();

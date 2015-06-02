@@ -125,8 +125,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Gun)
 		TArray<EFireMode> FireModes;
 
+	uint8 CurrentMagazineIndex;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly,Category = Gun)
+		TSubclassOf<AWAWMagazine> MagazineClass;	
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Gun)
-		TSubclassOf<AWAWMagazine> CurrentMagazine;
+		AWAWMagazine* CurrentMagazine;
 
 	TArray<int8> MagazineAmmoCounts;
 

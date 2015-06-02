@@ -27,6 +27,17 @@ bool AWAWMagazine::IsEmpty()
 	return bIsEmpty;
 }
 
+void AWAWMagazine::Refill()
+{
+
+	CurrentAmmo = Capacity;
+}
+
+void AWAWMagazine::LoadAmmo(uint8 NumShots)
+{
+	CurrentAmmo = NumShots;
+}
+
 bool AWAWMagazine::IsFull()
 {
 	return bIsFull;

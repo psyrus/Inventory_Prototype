@@ -7,13 +7,19 @@
 
 AWAWWeapon::AWAWWeapon(const FObjectInitializer& ObjectInitializer) : Super( ObjectInitializer)
 {
-	AmmoInMagazine = 1;
+	CurrentMagazineIndex = 0;
 }
 
 void AWAWWeapon::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	//GEngine->AddOnScreenDebugMessage(1, 5.f, FColor::Red, TEXT("Magazine has shots remaining:"));
+	CurrentMagazine = GetWorld()->SpawnActor<AWAWMagazine>(MagazineClass);
+
+	for (uint8 i = 0; i < MagazineAmmoCounts.Num(); i++)
+	{
+		MagazineAmmoCounts.Add(CurrentMagazine->GetCapacity());
+	}
 }
 
 bool AWAWWeapon::CanFire()
@@ -74,10 +80,11 @@ void AWAWWeapon::BurstFire(uint8 RoundsToFire)//I figured you won't always have 
 void AWAWWeapon::Reload()
 {
 	//Don't reload if the magazine is still full
-	AWAWMagazine* Magazine = Cast<AWAWMagazine>(CurrentMagazine);
-	if (!Magazine->IsFull())
+	//AWAWMagazine* Magazine = Cast<AWAWMagazine>(CurrentMagazine);
+	if (!CurrentMagazine->IsFull())
 	{
 		/** */
+		CurrentMagazine->Refill();
 
 		/** Stuff about playing animations & sounds - Can depend on if a round is chambered or not*/
 
