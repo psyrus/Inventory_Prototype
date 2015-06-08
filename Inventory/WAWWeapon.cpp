@@ -33,6 +33,17 @@ bool AWAWWeapon::CanFire()
 	return CanFire;
 }
 
+FString AWAWWeapon::DisplayAmmoCounts()
+{
+	FString ammo = "Ammo counts: ";
+	for (int32 iter = 0; iter < MagazineAmmoCounts.Num(); iter++)
+	{
+		ammo.Append("|" + MagazineAmmoCounts[iter]);
+	}
+
+	return ammo;
+}
+
 void AWAWWeapon::Fire()
 {
 	if (CanFire())
@@ -75,6 +86,11 @@ void AWAWWeapon::BurstFire(uint8 RoundsToFire)//I figured you won't always have 
 			
 		}
 	}
+}
+
+void AWAWWeapon::CycleFireMode()
+{
+
 }
 
 void AWAWWeapon::Reload()

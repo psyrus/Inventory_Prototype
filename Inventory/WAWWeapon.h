@@ -15,7 +15,7 @@ class AWAWLoadout;
 USTRUCT()
 struct FWeaponData
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 	/** inifite ammo for reloads */
 	UPROPERTY(EditDefaultsOnly, Category = Ammo)
@@ -117,6 +117,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Gun)
 		void CycleFireMode(); //needs a server equivalent
 
+	UFUNCTION(BlueprintCallable, Category = Gun)
+		FString DisplayAmmoCounts();
+
 	bool CanFire();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category=Gun)
@@ -132,6 +135,8 @@ public:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Gun)
 		AWAWMagazine* CurrentMagazine;
+
+
 
 	TArray<int8> MagazineAmmoCounts;
 

@@ -36,7 +36,7 @@ public:
 		UFUNCTION(BlueprintCallable, Category = "Ammo")
 			void Refill();
 		UFUNCTION(BlueprintCallable, Category = "Ammo")
-			void LoadAmmo();
+			void LoadAmmo(uint8 NumShots);
 
 
 		UFUNCTION(BlueprintCallable, Category = "Ammo")

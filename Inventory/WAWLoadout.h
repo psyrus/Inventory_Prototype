@@ -119,6 +119,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Kit)
 		void CycleItems();
 
+	UFUNCTION(BlueprintCallable, Category = Kit)
+		AWAWEquippableItem* GetCurrentItem();
+
 protected:
 	/** The pawn that owns the inventorycontroller that controls this loadout.*/
 	UPROPERTY(EditDefaultsOnly, Category=Defaults)
@@ -129,6 +132,10 @@ protected:
 
 	/** An identifier for which item is currently being used, so it can be easily referenced */
 	int CurrentItemIndex;
+
+	/** An identifier for which item is currently being used, so it can be easily referenced */
+	UPROPERTY(VisibleAnywehre, EditDefaultsOnly, Category = Defaults)
+	int DefaultItemIndex;
 
 	/** Use this as the actual inventory, that way it doesn't need the subclassof except for the initial spawning*/
 	UPROPERTY(BlueprintReadWrite, Category = Contents)

@@ -3,6 +3,8 @@
 #include "Inventory_Prototype.h"
 #include "WAWCharacter.h"
 #include "Inventory/WAWLoadout.h"
+#include "Inventory/WAWEquippableItem.h"
+#include "Inventory/WAWWeapon.h"
 
 AWAWCharacter::AWAWCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -13,8 +15,8 @@ void AWAWCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 	CheckLoadout();
-	//Loadout = GetWorld()->SpawnActor<AWAWLoadout>(AWAWLoadout::StaticClass());
-	//Loadout->SetOwner(this);
+	//SpawnLoadout = GetWorld()->SpawnActor<AWAWLoadout>(AWAWLoadout::StaticClass());
+	//SpawnLoadout->SetOwner(this);
 
 
 	//PrimaryWeapon = (AWAWWeapon*)GetWorld()->SpawnActor(AWAWWeapon::StaticClass());
@@ -27,12 +29,12 @@ void AWAWCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompon
 	Super::SetupPlayerInputComponent(InputComponent);
 	//Set up the bindings for the loadout
 	InputComponent->BindAction("CycleWeaponsUp", IE_Pressed, this, &AWAWCharacter::CheckLoadout);
+
 }
 
 
 bool AWAWCharacter::IsValidAttachmentPoint(FName PointToCheck)
 {
-
 	return true;
 }
 
@@ -43,17 +45,23 @@ void AWAWCharacter::AttachItem(AWAWEquippableItem* Item, FName AttachmentPoint)
 
 AWAWLoadout* AWAWCharacter::GetLoadout()
 {
-
 	return NULL;
-
 }
 
 void AWAWCharacter::CheckLoadout()
 {
-	GetWorld()->SpawnActor(Loadout);
+	Kit = GetWorld()->SpawnActor<AWAWLoadout>(SpawnLoadout);
+	AWAWEquippableItem* CurrentItem = Kit->GetCurrentItem();
+	
+	if (CurrentItem->IsA<AWAWWeapon>())
+	{
+		AWAWWeapon* temp = Cast<AWAWWeapon>(CurrentItem);
+		FString x = temp->DisplayAmmoCounts();
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *x);
+	}
 }
 
 void AWAWCharacter::dummyFunc()
 {
-	//AWAWLoadout* Loadout = GetWorld()->SpawnActor<AWAWLoadout>(AWAWLoadout::StaticClass());
+	//AWAWLoadout* SpawnLoadout = GetWorld()->SpawnActor<AWAWLoadout>(AWAWLoadout::StaticClass());
 }

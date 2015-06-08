@@ -43,6 +43,8 @@ protected:
 	class AWAWWeapon* PrimaryWeapon; 
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-		TSubclassOf<AWAWLoadout> Loadout;
+		TSubclassOf<AWAWLoadout> SpawnLoadout;
+
+	AWAWLoadout* Kit;
 
 };

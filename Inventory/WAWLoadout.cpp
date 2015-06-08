@@ -22,12 +22,21 @@ AWAWLoadout::AWAWLoadout(const FObjectInitializer& ObjectInitializer) : Super(Ob
 	GunMags.MagazineName = "Test Magazine";
 	MagazineList.Add(GunMags);
 	LoadoutName = "Unset";
+	Inventory.Reserve(1);
 }
 
 void AWAWLoadout::PostInitProperties()
 {
 	Super::PostInitProperties();
 	CurrentMagazineIndex = -1;
+	if (DefaultItemIndex < EquipmentList.Num())
+	{
+		CurrentItemIndex = DefaultItemIndex;
+	}
+	else
+	{
+		CurrentItemIndex = DefaultItemIndex = 0;
+	}
 }
 
 void AWAWLoadout::PostInitializeComponents()
@@ -50,7 +59,7 @@ void AWAWLoadout::PostInitializeComponents()
 			AWAWEquippableItem* CurrentItem = GetWorld()->SpawnActor<AWAWEquippableItem>(Item);
 			CurrentItem->GetItemMesh()->SetVisibility(false, true);
 			Inventory.Add(CurrentItem);
-			UE_LOG(LogTemp, Warning, TEXT("Initialized Item: %s", CurrentItem->GetName()));
+			UE_LOG(LogTemp, Warning, TEXT("Initialized Item: %s"), *(CurrentItem->GetName()));
 
 		}
 	}
@@ -63,6 +72,16 @@ void AWAWLoadout::PostInitializeComponents()
 	}
 
 
+}
+
+AWAWEquippableItem* AWAWLoadout::GetCurrentItem()
+{
+	AWAWEquippableItem* x = NULL;
+	if (Inventory.Num() > 0)
+	{
+		x = Cast<AWAWEquippableItem>(Inventory[CurrentItemIndex]);
+	}
+	return x;
 }
 
 void AWAWLoadout::Physicalize()
